@@ -176,13 +176,14 @@
 
     <div id="comments_main">
 
-	<h2> Laissez un commentaire </h2>
+	<h2 id="comments_header"> Laissez un commentaire </h2>
 
-	<form action="add_comments.php" method="post">
+	<form action="saving_comments.php" method="post">
 	    <p>
-		<label for="pseudo">Pseudo</label> : <input type="text" name="pseudo" id="pseudo"/> <br />
+		<label for="pseudo">Pseudo</label> : <br />
+		<input type="text" name="pseudo" id="pseudo"/> <br />
 		<label for="message">Message</label> : <br />
-		<textarea name="message" id="message" rows="10" cols="70"></textarea> <br />
+		<textarea name="message" id="message" rows="10" cols="60"></textarea> <br />
 		<input type="submit" value="Envoyer" />
 	    </p>
 	</form>
@@ -194,35 +195,33 @@
 	?>
 
 	<div id="comments_sub">
-	<?php
+	    <?php
 
-	//connexion à la BDD via PDO (PHP Data Objects), extension permettant la connexion à une base de données
-	try
-	{
-            $db = new PDO('mysql:host=localhost;dbname=comments;charset=utf8', 'root', 'mizollen69', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-	}
-	catch(Exception $Err)
-	{
-	    die('Error : ' . $Err->getMessage());
-	}
-	
-	$data = $db->query('SELECT pseudo, message, DATE_FORMAT(date, \'%d/%m/%Y - %Hh%imin%ss\') AS date_fr FROM comments_nena ORDER BY date');
-	while($entry = $data->fetch())
-	{
-        ?>
-	    <div class="comment_block">
-		<p>
-		    <?php echo nl2br(htmlspecialchars($entry['message']));?>
-		</p>
-		<p>
-		    <em class="comment_author"><?php echo htmlspecialchars($entry['pseudo']);?></em> - <?php echo $entry['date_fr'];?>
-		</p>
+	    //connexion à la BDD via PDO (PHP Data Objects), extension permettant la connexion à une base de données
+	    try
+	    {
+		$db = new PDO('mysql:host=localhost;dbname=comments;charset=utf8', 'root', 'mizollen69', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+	    }
+	    catch(Exception $Err)
+	    {
+		die('Error : ' . $Err->getMessage());
+	    }
+	    
+	    $data = $db->query('SELECT pseudo, message, DATE_FORMAT(date, \'%d/%m/%Y - %Hh%imin%ss\') AS date_fr FROM comments_nena ORDER BY date');
+	    while($entry = $data->fetch())
+	    {
+            ?>
+		<div class="comment_block">
+		    <p class="comments_p">
+			<?php echo nl2br(htmlspecialchars($entry['message']));?><br/>
+			<em class="comment_pseudo"><?php echo htmlspecialchars($entry['pseudo']);?></em> - <?php echo $entry['date_fr'];?>
+		    </p>
 	    </div>
 	<?php
 	}
 	$data->closeCursor();
 	?>
-	
+		
 	</div>
     </div>
 

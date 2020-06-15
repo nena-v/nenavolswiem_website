@@ -207,6 +207,75 @@ img
     color: rgba(244,0,0,0.55);
 }
 
+/***** commentaires *****/
+
+#comments_main
+{
+    position: relative;
+    width: 80%;
+    margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: justify;
+}
+
+form
+{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#comments_header
+{
+    font-style: normal;
+    font-size: 1.2em;
+}
+
+.comments_p
+{
+    font-size: 0.95em;
+}
+
+textarea
+{
+    max-width: 100%;
+}
+
+input
+{
+    max-width: 100%;
+}
+
+#comments_sub
+{
+    max-height: 500px;
+    overflow: scroll;
+    padding: 10px;
+}
+
+.comment_block
+{
+    border-top: 1px inset;
+    border-bottom: 1px inset;
+    border-color: rgb(215,222,215);
+    border-color: rgba(215,222,215,0.50);
+}
+
+/* pour éviter les superpositions de bordures, les .comment_block qui en suivent un autre n'ont pas de bordure supérieure */
+.comment_block + .comment_block
+{
+    border-top: none; 
+    border-bottom: 1px inset;
+    border-color: rgb(215,222,215);
+    border-color: rgba(215,222,215,0.50);
+}
+
+.comment_pseudo
+{
+    color: rgb(63,53,53);
+    color: rgba(244,0,0,0.55);
+}
+
 /***** footer *****/
 
 footer
