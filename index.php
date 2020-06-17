@@ -181,9 +181,9 @@
 	<form action="saving_comments.php" method="post">
 	    <p>
 		<label for="pseudo">Pseudo</label> : <br />
-		<input type="text" name="pseudo" id="pseudo"/> <br />
-		<label for="message">Message</label> : <br />
-		<textarea name="message" id="message" rows="10" cols="60"></textarea> <br />
+		<input type="text" name="pseudo" id="pseudo" maxlength="255"/> <br />
+		<label for="comment_txt">Commentaire</label> : <br />
+		<textarea name="comment_txt" id="comment_txt" rows="10" cols="60" maxlength="600"></textarea> <br />
 		<input type="submit" value="Envoyer" />
 	    </p>
 	</form>
@@ -197,23 +197,24 @@
 	<div id="comments_sub">
 	    <?php
 
-	    //connexion à la BDD via PDO (PHP Data Objects), extension permettant la connexion à une base de données
+	    //Connexion à la BDD via PDO (PHP Data Objects), extension permettant la connexion à une base de données
 	    try
 	    {
-		$db = new PDO('mysql:host=localhost;dbname=comments;charset=utf8', 'root', 'mizollen69', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+		$db = new PDO('mysql:host=localhost;dbname=comments_nena;charset=utf8', 'root', 'mizollen69', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 	    }
 	    catch(Exception $Err)
 	    {
 		die('Error : ' . $Err->getMessage());
 	    }
-	    
-	    $data = $db->query('SELECT pseudo, message, DATE_FORMAT(date, \'%d/%m/%Y - %Hh%imin%ss\') AS date_fr FROM comments_nena ORDER BY date');
+
+	    //Récupération des données via la méthode query.
+	    $data = $db->query('SELECT pseudo, comment_txt, DATE_FORMAT(date, \'%d/%m/%Y - %Hh%imin%ss\') AS date_fr FROM comments_tb ORDER BY date DESC');
 	    while($entry = $data->fetch())
 	    {
             ?>
 		<div class="comment_block">
 		    <p class="comments_p">
-			<?php echo nl2br(htmlspecialchars($entry['message']));?><br/>
+			<?php echo nl2br(htmlspecialchars($entry['comment_txt']));?><br/>
 			<em class="comment_pseudo"><?php echo htmlspecialchars($entry['pseudo']);?></em> - <?php echo $entry['date_fr'];?>
 		    </p>
 	    </div>
