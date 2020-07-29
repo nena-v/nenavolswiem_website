@@ -249,14 +249,14 @@ input
 #comments_sub
 {
     max-height: 500px;
-    overflow: scroll;
+    overflow: scroll; /* si la hauteur maximum est dépassée, une barre de défilement sera mise en place pour parcourir les commentaires. */
     padding: 10px;
 }
 
 .comment_block
 {
     max-width: 700px;
-    word-break: break-word; /* permet de couper les mots lorsqu'ils sont susceptibles de sortir du block (susceptible d'être le cas pour les URLS par ex). */
+    word-break: break-word; /* permet de couper les mots lorsqu'ils "sortent" du bloc (susceptible d'être le cas pour les URLS par ex). */
     border-top: 1px inset;
     border-bottom: 1px inset;
     border-color: rgb(215,222,215);
