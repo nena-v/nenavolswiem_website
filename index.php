@@ -203,7 +203,7 @@
 		//Connexion à la BDD via PDO (PHP Data Objects), extension permettant la connexion à une base de données
 		try
 		{
-		    $db = new PDO('mysql:host=localhost;dbname=nenajqpn_comments;charset=utf8', 'nenajqpn_comments_user', 'bbZQ?F1g^NK./0oL!G');
+		    $db = new PDO('mysql:host=localhost;dbname=comments;charset=utf8', 'root', 'mizollen69');
 		    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		}
 		catch(Exception $Err)
