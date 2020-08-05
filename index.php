@@ -43,25 +43,24 @@
       
       <nav>
 
-    <div id="gradiant">
-    <input type="checkbox" id="menu">
-    <label id="website_title" for="menu" onclick="">NenaVolswiem&nbsp;*</label>
-      
-    <ul id="menu_links">
-      <li><a href="../accueil.html">Accueil</a></li>
-      <li><a href="../auteur.html">L'auteur</a></li>
-      <li><a href="../contact.html">Contact&nbsp;*</a></li>
-    </ul>
-    </div>
+	<div id="menu_banner">
+	  <a id="website_title" href="../accueil.html">NenaVolswiem&nbsp;*</a>
 
-    <div id="burger_menu">
-      <div class="burger_line"></div>
-      <div class="burger_line"></div>
-      <div class="burger_line"></div>
-    </div>
-      
+	  <div id="burger_menu">
+	    <div class="burger_line"></div>
+	    <div class="burger_line"></div>
+	    <div class="burger_line"></div>
+	  </div>
+	  
+	</div>
+	
+	<ul id="menu_links">
+	  <li><a href="../accueil.html">Accueil</a></li>
+	  <li><a href="../auteur.html">L'auteur</a></li>
+	  <li><a href="../contact.html">Contact&nbsp;*</a></li>
+	</ul>
+	
       </nav>
-
       
       <section>
 
@@ -242,6 +241,9 @@
       </footer>
 
     </div>
+
+    <script src="jquery-3.5.1.min.js"></script>
+    <script src="nenavolswiem.js"></script>
     
   </body>
 
