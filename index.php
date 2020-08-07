@@ -234,10 +234,14 @@
       <footer>
     
     <ul class="footer_links">
-      <li><a href="../mentions_legales.html">Mentions légales</a></li>
-      <li><a href="../contact.html">Me contacter</a></li>
+	<li><a class="footer_text" href="../mentions_legales.html">Mentions légales</a></li>
+	<li><a class="footer_text" href="../contact.html">Me contacter</a></li>
+	<li><span id="dom_to_json" class="footer_text">DOM to JSON</span></li>
     </ul>
 
+    <form id="dom_to_json_form" action="./dom_json.php" target="_blank" method="POST">
+	<input type="hidden" id="dom_input" name="dom_input" value=""/>
+    </form>
       </footer>
 
     </div>
