@@ -18,20 +18,4 @@ if(!empty($_POST['pseudo']) && !empty($_POST['comment_txt']))
 $ins = $db->prepare('INSERT INTO comments_tb(pseudo, comment_txt, date) VALUES(?, ?, NOW())');
 $ins->execute(array($_POST['pseudo'],$_POST['comment_txt']));
 
-//Redirection vers index.php, au niveau du div dont l'id est "comments_main"
-header('Location: index.php#comments_main');
-}
-elseif(empty($_POST['pseudo']) || empty($_POST['comment_txt']))
-{
-//Indication d'une erreur puis redirection vers index.php, au niveau du div dont l'id est "comments_main" (une alerte sur la page initiale pourra être mise en place en Javascript)
-header('refresh:1;url=index.php#comments_main');
-echo 'Merci d\'indiquer un pseudo et un commentaire - redirection en cours.';
-}
-else
-{
-//Indication d'une erreur puis redirection vers index.php, au niveau du div dont l'id est "comments_main"
-header('refresh:1;url=index.php#comments_main');
-echo 'Erreur lors de l\'envoi du commentaire - redirection en cours.';
-}
-
 ?>

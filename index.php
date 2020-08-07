@@ -177,13 +177,14 @@
 
 	    <h2 id="comments_header"> Laissez un commentaire </h2>
 
-	    <form action="saving_comments.php" method="post">
+	    <form action="" method="post">
 		<p>
 		    <label for="pseudo">Pseudo</label> : <br />
 		    <input type="text" name="pseudo" id="pseudo" maxlength="255"/> <br />
 		    <label for="comment_txt">Commentaire</label> : <br />
 		    <textarea name="comment_txt" id="comment_txt" rows="10" cols="60" maxlength="600"></textarea> <br />
-		    <input type="submit" value="Envoyer" />
+		    <div id="comments_errors"></div>
+		    <button type="button" id="send_comment_btn" title="Envoyer">Envoyer</button>
 		</p>
 	    </form>
 

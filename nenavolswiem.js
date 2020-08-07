@@ -8,7 +8,38 @@ jQuery(function($){
 	$('#menu_links').toggleClass("active");
     });
 
+    /*** TRAITEMENT DES COMMENTAIRES ***/
+
+    /* Fonction permettant d'envoyer son commentaire. Les données sont transmises grâce à AJAX à 'saving_comments.php', qui l'enregistre en base de données. */
+    $('#send_comment_btn').click(function(){
+	var pseudo = $('#pseudo').val();
+	var comment_txt = $('#comment_txt').val();
+	if(pseudo  && comment_txt){
+	    $.ajax({
+		url: 'saving_comments.php',
+		method: 'POST',
+		data: {
+		    pseudo: pseudo,
+		    comment_txt: comment_txt
+		},
+		dataType: 'text',
+		timeout: 2000,
+		error: function(jqXHR, textStatus, errorThrown){
+		    $('#comments_errors').html("Votre commentaire n'a pas pu être envoyé.<br/>Rapport d'erreur : " + textStatus + ". Erreur HTTP : " + errorThrown + ".");
+		},
+		success: function(){
+		    $('#comments_errors').html("");
+		    $('#comment_txt').val("");
+		}
+	    });
+	}
+	else{
+	    $('#comments_errors').html("Merci d'entrer un pseudo et un commentaire.");
+	}
+    });
+
     
+			    
 
     /*** STRUCTURE DU DOM EN JSON ***/
 
