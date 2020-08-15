@@ -1,8 +1,8 @@
 jQuery(function($){
-
+    
     /*** ANIMATION DU MENU ***/
 
-    /* Animation du menu via un ajout de classe aux balises HTML concernés. */
+    /* Animation du menu via un ajout de classe aux balises HTML concernées. */
     $('#menu_banner').click(function(){
 	$(this).toggleClass("active");
 	$('#menu_links').toggleClass("active");
@@ -10,36 +10,70 @@ jQuery(function($){
 
     /*** TRAITEMENT DES COMMENTAIRES ***/
 
-    /* Fonction permettant d'envoyer son commentaire. Les données sont transmises grâce à AJAX à 'saving_comments.php', qui l'enregistre en base de données. */
+    /* Fonction permettant de récupérer les commentaires. */
+    function get_comments(){
+	$.ajax({
+	    url: 'getting_comments.php',
+	    method: 'GET',
+	    //type de données attendues du serveur : JSON
+	    dataType: 'json',
+	    timeout: 2000,
+	    error: function(jqXHR, textStatus, errorThrown){
+		$('#comments_errors_display').html("Les commentaires n'ont pas pu être récupérés.<br/>Rapport d'erreur : " + textStatus + ". Erreur HTTP : " + errorThrown + ".")
+	    },
+	    success: function(data){
+		display_comments(data); //les commentaires sont affichés grâce à la fonction "display_comments()"
+		$('#comments_errors_display').html("");
+	    }
+	});
+    };
+
+    /* Fonction permettant l'affichage des commentaires. Arg: données en format JSON. */
+    function display_comments(commentsJson){
+	$('#comments_sub').empty();
+	for(var i = 0 ; i < commentsJson.length ; i++){
+	    var cPs = commentsJson[i].pseudo;
+	    var cTxt = commentsJson[i].comment_txt;
+	    var cDate = commentsJson[i].date_fr;
+	    $('#comments_sub').append("<div class=\"comment_block\"><p class=\"comments_p\">" + cTxt + "<br/><em class=\"comment_pseudo\">" + cPs + "</em> - " + cDate + "</p></div>"); //les " entourant les attributs sont échappés afin qu'ils soient pris en compte
+	}
+    };
+
+    //les commentaires sont récupérées et affichées au chargement de la page
+    get_comments();
+    
+    /* Lorsque l'utilisateur clique sur le bouton "Envoyer", les données sont transmises grâce à AJAX à 'saving_comments.php', qui l'enregistre en base de données. */
     $('#send_comment_btn').click(function(){
-	var pseudo = $('#pseudo').val();
+	//récupération des données entrées par l'utilisateur
+	var pseudo = $('#pseudo').val(); 
 	var comment_txt = $('#comment_txt').val();
 	if(pseudo  && comment_txt){
 	    $.ajax({
 		url: 'saving_comments.php',
 		method: 'POST',
+		//données transmises via la méthode 'POST'
 		data: {
 		    pseudo: pseudo,
 		    comment_txt: comment_txt
 		},
-		dataType: 'text',
+		//temps (en ms) au delà duquel la requête sera considérée comme n'ayant pu aboutir
 		timeout: 2000,
+		//fonction appelée en cas d'erreur
 		error: function(jqXHR, textStatus, errorThrown){
-		    $('#comments_errors').html("Votre commentaire n'a pas pu être envoyé.<br/>Rapport d'erreur : " + textStatus + ". Erreur HTTP : " + errorThrown + ".");
+		    $('#comments_errors_form').html("Votre commentaire n'a pas pu être envoyé.<br/>Rapport d'erreur : " + textStatus + ". Erreur HTTP : " + errorThrown + ".");
 		},
+		//fonction appelée en cas de succès
 		success: function(){
-		    $('#comments_errors').html("");
+		    get_comments(); //récupération et affichage des commentaires
+		    $('#comments_errors_form').html("");
 		    $('#comment_txt').val("");
 		}
 	    });
 	}
 	else{
-	    $('#comments_errors').html("Merci d'entrer un pseudo et un commentaire.");
+	    $('#comments_errors_form').html("Merci d'entrer un pseudo et un commentaire.");
 	}
     });
-
-    
-			    
 
     /*** STRUCTURE DU DOM EN JSON ***/
 
@@ -62,7 +96,7 @@ jQuery(function($){
 	    childNodesNumber: parent.childNodes.length //nombre de noeuds enfants
 	};
 	if(parent.childNodes.length){
-	    obj.childNodes = [] //array comprenant les noeuds enfants
+	    obj.childNodes = [] //tableau comprenant les noeuds enfants
 	    for(var i = 0 ; i < parent.childNodes.length ; i++){
 		obj.childNodes[i] = domToObject(parent.childNodes[i], obj.childNodes);
 	    }

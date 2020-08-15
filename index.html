@@ -183,51 +183,14 @@
 		    <input type="text" name="pseudo" id="pseudo" maxlength="255"/> <br />
 		    <label for="comment_txt">Commentaire</label> : <br />
 		    <textarea name="comment_txt" id="comment_txt" rows="10" cols="60" maxlength="600"></textarea> <br />
-		    <div id="comments_errors"></div>
+		    <div id="comments_errors_form"></div>
 		    <button type="button" id="send_comment_btn" title="Envoyer">Envoyer</button>
 		</p>
 	    </form>
 
 	    <div id="comments_sub">
-		<?php
-
-		function nettoyer($x){
-		    if($x){
-			$x=trim($x);
-			$x=stripslashes($x);
-			$x=htmlspecialchars($x);
-		    }
-		    return $x;
-		}
-		
-		//Connexion à la BDD via PDO (PHP Data Objects), extension permettant la connexion à une base de données
-		try
-		{
-		    $db = new PDO('mysql:host=localhost;dbname=comments;charset=utf8', 'root', 'mizollen69');
-		    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		}
-		catch(Exception $Err)
-		{
-		    die('Error : ' . $Err->getMessage());
-		}
-
-		//Récupération des données via la méthode query.
-		$data = $db->query('SELECT pseudo, comment_txt, DATE_FORMAT(date, \'%d/%m/%Y - %Hh%imin%ss\') AS date_fr FROM comments_tb ORDER BY date DESC');
-		while($entry = $data->fetch())
-		{
-		?>
-		<div class="comment_block">
-		    <p class="comments_p">
-			<?php echo nl2br(nettoyer($entry['comment_txt']));?><br/>
-			<em class="comment_pseudo"><?php echo nettoyer($entry['pseudo']);?></em> - <?php echo $entry['date_fr'];?>
-		    </p>
+		<div id="comments_errors_display"></div>
 	    </div>
-	<?php
-	}
-	$data->closeCursor();
-	?>
-		
-	</div>
     </div>
 
       </section>
